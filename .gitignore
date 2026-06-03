@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.log
+.env
+.env.local
+coverage/
+.DS_Store
+.vscode/
+.idea/
+
+# Personal scratchpad — roadmaps, todo lists, anything not for public consumption.
+notes/

@@ -1,0 +1,49 @@
+{
+  "name": "prometheus-mcp",
+  "version": "0.1.0",
+  "description": "Model Context Protocol server for Prometheus — let Claude write and run PromQL.",
+  "license": "MIT",
+  "author": "Zahid Hasan",
+  "type": "module",
+  "bin": {
+    "prometheus-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "prometheus",
+    "promql",
+    "claude",
+    "observability",
+    "devops",
+    "sre"
+  ]
+}

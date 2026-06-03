@@ -1,0 +1,50 @@
+# Demo stack: a local Prometheus scraping node-exporter so you have real
+# data to query through the MCP server.
+#
+# Usage:
+#   docker compose up -d
+#   # then point your MCP client at PROMETHEUS_URL=http://localhost:9090
+#   npm run dev   # or: docker compose run --rm mcp
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.55.0
+    container_name: prom-mcp-demo
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=2h"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./docker/alerts.yml:/etc/prometheus/alerts.yml:ro
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: prom-mcp-node-exporter
+    command:
+      - "--path.rootfs=/host"
+    pid: host
+    volumes:
+      - /:/host:ro,rslave
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+
+  # Optional: run the MCP server itself in a container for the README demo.
+  # Most users will run it locally via `npm run dev` instead.
+  mcp:
+    build: .
+    image: prometheus-mcp:local
+    container_name: prometheus-mcp
+    environment:
+      PROMETHEUS_URL: http://prometheus:9090
+      LOG_LEVEL: info
+    # stdio servers don't make sense to long-run in compose; this is for `run --rm`.
+    profiles: ["manual"]
+    depends_on:
+      - prometheus
+    stdin_open: true
+    tty: false

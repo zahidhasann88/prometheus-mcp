@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "prometheus": {
+      "command": "node",
+      "args": ["/absolute/path/to/prometheus-mcp/dist/index.js"],
+      "env": {
+        "PROMETHEUS_URL": "http://localhost:9090"
+      }
+    },
+
+    "prometheus-grafana-cloud": {
+      "command": "node",
+      "args": ["/absolute/path/to/prometheus-mcp/dist/index.js"],
+      "env": {
+        "PROMETHEUS_URL": "https://prometheus-prod-XX.grafana.net/api/prom",
+        "PROMETHEUS_USERNAME": "123456",
+        "PROMETHEUS_PASSWORD": "glc_xxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+
+    "prometheus-with-bearer": {
+      "command": "node",
+      "args": ["/absolute/path/to/prometheus-mcp/dist/index.js"],
+      "env": {
+        "PROMETHEUS_URL": "https://prom.internal.example.com",
+        "PROMETHEUS_BEARER_TOKEN": "eyJhbGciOiJ..."
+      }
+    }
+  }
+}
